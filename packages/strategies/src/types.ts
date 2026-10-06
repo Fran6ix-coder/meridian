@@ -45,14 +45,24 @@ export class FixedPointDecimal {
     return new FixedPointDecimal(this.#stroops - other.#stroops);
   }
 
-  // Multiplies two fixed-point values. e.g. 100 * 0.003 = 0.3
+  /**
+   * Multiplies two fixed-point values, e.g. 100 * 0.003 = 0.3.
+   *
+   * Truncates toward zero. `Decimal.mul` in this package defaults to half-up,
+   * so a result computed through this type can differ by one stroop from the
+   * same computation through `Decimal`.
+   */
   mul(other: FixedPointDecimal): FixedPointDecimal {
     return new FixedPointDecimal(
       (this.#stroops * other.#stroops) / STROOPS_PER_UNIT
     );
   }
 
-  // Divides this by other. Panics on division by zero.
+  /**
+   * Divides this by other. Truncates toward zero, matching `mul`.
+   *
+   * @throws RangeError if other is zero.
+   */
   div(other: FixedPointDecimal): FixedPointDecimal {
     if (other.#stroops === 0n) throw new RangeError("division by zero");
     return new FixedPointDecimal(

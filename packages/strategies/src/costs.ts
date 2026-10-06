@@ -16,11 +16,7 @@ export interface CostSchedule {
 }
 
 export type OperationType =
-  | "swap"
-  | "borrow"
-  | "repay"
-  | "deposit"
-  | "withdraw";
+  "swap" | "borrow" | "repay" | "deposit" | "withdraw";
 
 export interface SimulatedOperation {
   type: OperationType;
@@ -42,7 +38,7 @@ export interface OperationResult {
   };
 }
 
-/** Convenience zero-cost schedule — reproduces gross results unchanged. */
+/** A zero-cost schedule, so a net result equals the gross result it was given. */
 export const ZERO_COSTS: CostSchedule = {
   swapFeeRate: FixedPointDecimal.fromString("0"),
   borrowSpreadRate: FixedPointDecimal.fromString("0"),
